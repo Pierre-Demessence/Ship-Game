@@ -1,20 +1,14 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class Drop : MonoBehaviour
+public class Drop : PoolableEntity
 {
-    [SerializeField] protected Rigidbody2D Rigidbody2D;
-
+    
     private void Update()
     {
         Rigidbody2D.velocity = new Vector2(0, -0.5f);
     }
 
-    public void DoSomething(Ship ship)
+    protected override void OnDie()
     {
-        ship.Speed += 0.25f;
-        ship.Rof += 0.75f;
-        ship.Score += 50;
-        Destroy(gameObject);
     }
 }

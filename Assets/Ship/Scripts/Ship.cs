@@ -1,14 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Ship : Entity
 {
-    [SerializeField] private PoolableEntity _bullet;
-    [SerializeField] private ObjectPool _bulletObjectPool;
-
-    private float _lastFire;
-
-    [SerializeField] private float _rof = 1f;
     [SerializeField] private float _speed = 10f;
+    [SerializeField] private List<Weapon> _weapons = new List<Weapon>();
 
     public int Score { get; set; }
 
@@ -17,11 +13,6 @@ public class Ship : Entity
         get { return _speed; }
         set { _speed = value; }
     }
-    public float Rof
-    {
-        get { return _rof; }
-        set { _rof = value; }
-    }
 
     private void Update()
     {
@@ -29,13 +20,8 @@ public class Ship : Entity
         var movY = Input.GetAxis("Vertical") * _speed; // * Time.deltaTime;
         Rigidbody2D.velocity = new Vector2(movX, movY);
 
-        if (Input.GetButton("Fire1") && Time.time - _lastFire > 1 / _rof)
-        {
-            var bullet = _bulletObjectPool.GetPooledObject(_bullet.GetType());
-            bullet.transform.position = transform.position;
-            _lastFire = Time.time;
-            Score++;
-        }
+        if (Input.GetButton("Fire1"))
+            _weapons.ForEach(w => w.Fire());
     }
 
     protected override void OnDie()
@@ -45,7 +31,11 @@ public class Ship : Entity
     private void OnCollisionEnter2D(Collision2D col)
     {
         Drop drop;
-        if ((drop = col.gameObject.GetComponentInChildren<Drop>()) != null)
-            drop.DoSomething(this);
+        if ((drop = col.gameObject.GetComponent<Drop>()) != null)
+        {
+            Speed += 0.25f;
+            Score += 50;
+            _weapons.ForEach(w => w.Rof += 0.75f);
+        }
     }
 }

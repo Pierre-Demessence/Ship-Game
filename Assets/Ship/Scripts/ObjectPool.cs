@@ -6,8 +6,16 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
+    public static ObjectPool Instance;
     private readonly List<GameObject> _pooledObjects = new List<GameObject>();
     [SerializeField] private List<ObjectPoolItem> _itemsToPool = new List<ObjectPoolItem>();
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else Debug.LogWarning("Trying to Instanciate another Object Pool");
+    }
 
     private void Start()
     {
@@ -20,15 +28,12 @@ public class ObjectPool : MonoBehaviour
             }
     }
 
-    public GameObject GetPooledObject<T>() where T : PoolableEntity
-    {
-        return GetPooledObject(typeof(T));
-    }
-    
+    public GameObject GetPooledObject<T>() where T : PoolableEntity => GetPooledObject(typeof(T));
+
     public GameObject GetPooledObject(Type T)
     {
-        var pooledObject = _pooledObjects.FirstOrDefault(o => !o.activeInHierarchy && o.GetComponent(T) != null);
         var poolItem = GetPoolItem(T);
+        var pooledObject = !poolItem.OnlyNew ? _pooledObjects.FirstOrDefault(o => !o.activeInHierarchy && o.GetComponent(T) != null) : null;
         if (pooledObject == null && poolItem.ShouldExpand)
         {
             pooledObject = Instantiate(poolItem.ObjectToPool).gameObject;
@@ -38,11 +43,8 @@ public class ObjectPool : MonoBehaviour
         return pooledObject;
     }
 
-    private ObjectPoolItem GetPoolItem<T>() where T : PoolableEntity
-    {
-        return GetPoolItem(typeof(T));
-    }
-    
+    private ObjectPoolItem GetPoolItem<T>() where T : PoolableEntity => GetPoolItem(typeof(T));
+
     private ObjectPoolItem GetPoolItem(Type T)
     {
         return _itemsToPool.FirstOrDefault(poolItem => poolItem.ObjectToPool.GetType() == T);
@@ -55,4 +57,5 @@ public class ObjectPoolItem
     [UsedImplicitly] public int AmountToPool;
     [UsedImplicitly] public PoolableEntity ObjectToPool;
     [UsedImplicitly] public bool ShouldExpand;
+    [SerializeField] public bool OnlyNew;
 }
