@@ -14,6 +14,7 @@ public class Drop : MonoBehaviour
     {
         ship.Speed += 0.25f;
         ship.Rof += 0.75f;
+        ship.Score += 50;
         Destroy(gameObject);
     }
 }

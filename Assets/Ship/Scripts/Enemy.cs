@@ -2,7 +2,7 @@
 using Random = System.Random;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Enemy : Entity
+public class Enemy : PoolableEntity
 {
     private readonly Random _random = new Random();
     [SerializeField] private Drop _drop;

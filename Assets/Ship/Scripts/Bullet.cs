@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Bullet : Entity
+public class Bullet : PoolableEntity
 {
     [SerializeField] private float _speed = 5f;
 
