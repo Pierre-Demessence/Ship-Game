@@ -6946,6 +6946,50 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &130690583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 130690584}
+  - component: {fileID: 130690585}
+  m_Layer: 8
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &130690584
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 130690583}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.003, y: 0.213, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1514420495}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &130690585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 130690583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a30df48534df7ace922c870c11712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bullet: {fileID: 114429987912341152, guid: 4986f0b472de0d14e95fa1e5ea5ab5fa, type: 2}
+  _bulletAmount: 2
+  _bulletSpacing: 1
+  _rof: 2
 --- !u!1 &217540016
 GameObject:
   m_ObjectHideFlags: 0
@@ -7530,6 +7574,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1212797991}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &541691554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 541691556}
+  - component: {fileID: 541691555}
+  m_Layer: 8
+  m_Name: Weapon (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &541691555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 541691554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a30df48534df7ace922c870c11712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bullet: {fileID: 114429987912341152, guid: 4986f0b472de0d14e95fa1e5ea5ab5fa, type: 2}
+  _bulletAmount: 3
+  _bulletSpacing: 1
+  _rof: 0
+--- !u!4 &541691556
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 541691554}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.239, y: 0.213, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1514420495}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &654170574
 GameObject:
@@ -11229,7 +11317,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1514420495}
   - component: {fileID: 1514420493}
-  - component: {fileID: 1514420498}
   - component: {fileID: 1514420494}
   - component: {fileID: 1514420496}
   - component: {fileID: 1514420497}
@@ -11257,7 +11344,8 @@ MonoBehaviour:
   Rigidbody2D: {fileID: 1514420496}
   _speed: 2.5
   _weapons:
-  - {fileID: 1514420498}
+  - {fileID: 130690585}
+  - {fileID: 541691555}
 --- !u!212 &1514420494
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11313,7 +11401,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0.95, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 130690584}
+  - {fileID: 541691556}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11369,19 +11459,6 @@ PolygonCollider2D:
       - {x: 0.15395644, y: -0.039718617}
       - {x: -0.0020100623, y: 0.22453263}
       - {x: -0.15697825, y: -0.040870942}
---- !u!114 &1514420498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1514420492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f3a30df48534df7ace922c870c11712, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bullet: {fileID: 114429987912341152, guid: 4986f0b472de0d14e95fa1e5ea5ab5fa, type: 2}
-  _rof: 2
 --- !u!1 &1647403504
 GameObject:
   m_ObjectHideFlags: 0
