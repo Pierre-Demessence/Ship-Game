@@ -3,8 +3,8 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class Entity : MonoBehaviour
 {
-    [SerializeField] private float _health = 1f;
-    [SerializeField] private float _power = 1f;
+    [SerializeField] protected float _health = 1f;
+    [SerializeField] protected float _power = 1f;
     [SerializeField] protected Rigidbody2D Rigidbody2D;
 
     private Entity _lastCollider;

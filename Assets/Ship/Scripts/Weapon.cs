@@ -3,8 +3,7 @@
 public class Weapon : MonoBehaviour
 {
     [SerializeField] private PoolableEntity _bullet;
-    [SerializeField] private ObjectPool _objectPool;
-    [SerializeField] private float _rof = 1f;
+    [SerializeField] private float _rof;
     private float _lastFire;
 
     public float Rof
@@ -17,7 +16,7 @@ public class Weapon : MonoBehaviour
     {
         if (!(Time.time - _lastFire > 1 / Rof)) return false;
 
-        var bullet = _objectPool.GetPooledObject(_bullet.GetType());
+        var bullet = ObjectPool.Instance.GetPooledObject(_bullet.GetType());
         bullet.transform.position = transform.position;
         _lastFire = Time.time;
         return true;

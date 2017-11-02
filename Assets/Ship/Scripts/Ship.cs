@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Ship : Entity
 {
-    [SerializeField] private float _speed = 10f;
+    [SerializeField] private float _speed;
     [SerializeField] private List<Weapon> _weapons = new List<Weapon>();
 
     public int Score { get; set; }

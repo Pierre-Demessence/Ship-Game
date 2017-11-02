@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool Instance;
-    private readonly List<GameObject> _pooledObjects = new List<GameObject>();
+    private readonly List<PoolableEntity> _pooledObjects = new List<PoolableEntity>();
     [SerializeField] private List<ObjectPoolItem> _itemsToPool = new List<ObjectPoolItem>();
 
     private void Awake()
@@ -24,7 +25,7 @@ public class ObjectPool : MonoBehaviour
             {
                 var obj = Instantiate(poolItem.ObjectToPool);
                 obj.gameObject.SetActive(false);
-                _pooledObjects.Add(obj.gameObject);
+                _pooledObjects.Add(obj);
             }
     }
 
@@ -33,15 +34,21 @@ public class ObjectPool : MonoBehaviour
     public GameObject GetPooledObject(Type T)
     {
         var poolItem = GetPoolItem(T);
-        var pooledObject = !poolItem.OnlyNew ? _pooledObjects.FirstOrDefault(o => !o.activeInHierarchy && o.GetComponent(T) != null) : null;
+        var pooledObject = !poolItem.OnlyNew ? _pooledObjects.FirstOrDefault(o => !o.gameObject.activeInHierarchy && o.GetComponent(T) != null) : null;
         if (pooledObject == null && poolItem.ShouldExpand)
         {
-            pooledObject = Instantiate(poolItem.ObjectToPool).gameObject;
+            pooledObject = Instantiate(poolItem.ObjectToPool);
             _pooledObjects.Add(pooledObject);
         }
-        pooledObject?.SetActive(true);
-        return pooledObject;
+        if (pooledObject)
+        {
+            pooledObject.Reset(poolItem.ObjectToPool);
+            pooledObject.gameObject.SetActive(true);
+            return pooledObject.gameObject;
+        }
+        return null;
     }
+
 
     private ObjectPoolItem GetPoolItem<T>() where T : PoolableEntity => GetPoolItem(typeof(T));
 
@@ -56,6 +63,6 @@ public class ObjectPoolItem
 {
     [UsedImplicitly] public int AmountToPool;
     [UsedImplicitly] public PoolableEntity ObjectToPool;
-    [UsedImplicitly] public bool ShouldExpand;
     [SerializeField] public bool OnlyNew;
+    [UsedImplicitly] public bool ShouldExpand;
 }

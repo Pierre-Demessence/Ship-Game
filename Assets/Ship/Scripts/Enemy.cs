@@ -7,7 +7,6 @@ using Random = System.Random;
 public class Enemy : PoolableEntity
 {
     [SerializeField] private List<DropItem> _dropItems = new List<DropItem>();
-    //[SerializeField] private ObjectPool _objectPool;
     
     private readonly Random _random = new Random();
 
