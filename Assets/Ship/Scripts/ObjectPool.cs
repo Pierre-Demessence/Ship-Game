@@ -42,7 +42,7 @@ public class ObjectPool : MonoBehaviour
         }
         if (pooledObject)
         {
-            pooledObject.Reset(poolItem.ObjectToPool);
+            pooledObject.ResetToDefault(poolItem.ObjectToPool);
             pooledObject.gameObject.SetActive(true);
             return pooledObject.gameObject;
         }

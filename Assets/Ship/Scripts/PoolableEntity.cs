@@ -5,7 +5,7 @@
         gameObject.SetActive(false);
     }
 
-    public virtual void Reset(PoolableEntity origin)
+    public virtual void ResetToDefault(PoolableEntity origin)
     {
         _health = origin._health;
         _power = origin._power;

@@ -21,6 +21,13 @@ public class Enemy : PoolableEntity
                 break;
             }
     }
+
+    public override void ResetToDefault(PoolableEntity origin)
+    {
+        base.ResetToDefault(origin);
+        var originCasted = origin as Enemy;
+        _dropItems = originCasted?._dropItems;
+    }
 }
 
 [Serializable]
