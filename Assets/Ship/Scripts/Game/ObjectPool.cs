@@ -7,11 +7,12 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool Instance;
+    
     private readonly List<PoolableEntity> _pooledObjects = new List<PoolableEntity>();
     private readonly Dictionary<Type, List<PoolableEntity>> _pooledObjects2 = new Dictionary<Type, List<PoolableEntity>>(); // TODO try this ?
-    [SerializeField] private List<ObjectPoolItem> _itemsToPool = new List<ObjectPoolItem>();
     
-    [SerializeField] private bool _activated;
+    [SerializeField] private bool _activated = true;
+    [SerializeField] private List<ObjectPoolItem> _itemsToPool = new List<ObjectPoolItem>();
     public bool Activated => _activated;
 
     private void Awake()
@@ -45,7 +46,7 @@ public class ObjectPool : MonoBehaviour
                 obj.gameObject.SetActive(false);
                 _pooledObjects.Add(obj);
             }
-        foreach (var poolItem in _itemsToPool)
+        /*foreach (var poolItem in _itemsToPool)
         {
             _pooledObjects2[poolItem.ObjectToPool.GetType()] = new List<PoolableEntity>();
             for (var i = 0; i < poolItem.AmountToPool; i++)
@@ -54,7 +55,7 @@ public class ObjectPool : MonoBehaviour
                 obj.gameObject.SetActive(false);
                 _pooledObjects2[poolItem.ObjectToPool.GetType()].Add(obj);
             }
-        }
+        }*/
     }
 
     public T GetPooledObject<T>() where T : PoolableEntity => (T) GetPooledObject(typeof(T));

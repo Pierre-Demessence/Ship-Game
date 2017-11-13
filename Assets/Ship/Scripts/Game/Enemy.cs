@@ -7,7 +7,6 @@ public class Enemy : PoolableEntity
     private readonly Random _random = new Random();
     [SerializeField] private DropTable _dropTable;
     [SerializeField] private float _health = 1f;
-    [SerializeField] private float _power = 1f;
 
     private float Health
     {
@@ -22,6 +21,7 @@ public class Enemy : PoolableEntity
 
     protected override void OnDie()
     {
+        FindObjectOfType<Game>().Score += 10;
         var rng = (float) _random.NextDouble();
         foreach (var dropItem in _dropTable.DropItems)
             if (rng * 100 <= dropItem.DropChance)
@@ -44,6 +44,5 @@ public class Enemy : PoolableEntity
     {
         var castedOrigin = (Enemy) origin;
         _health = castedOrigin._health;
-        _power = castedOrigin._power;
     }
 }

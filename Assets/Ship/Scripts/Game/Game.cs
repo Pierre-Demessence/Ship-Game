@@ -6,6 +6,7 @@ public class Game : Scene
 {
     private int _score;
     [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _gameoverPanel;
     [SerializeField] private AudioSource _music;
 
     [UsedImplicitly]
@@ -30,6 +31,12 @@ public class Game : Scene
     {
         Paused = !Paused;
         UpdatePause();
+    }
+
+    public void GameOver()
+    {
+        _gameoverPanel.SetActive(true);
+        FindObjectOfType<EnemySpawner>().Enabled = false;
     }
 
     private void UpdatePause()
