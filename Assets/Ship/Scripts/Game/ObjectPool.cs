@@ -8,7 +8,9 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool Instance;
     private readonly List<PoolableEntity> _pooledObjects = new List<PoolableEntity>();
+    private readonly Dictionary<Type, List<PoolableEntity>> _pooledObjects2 = new Dictionary<Type, List<PoolableEntity>>(); // TODO try this ?
     [SerializeField] private List<ObjectPoolItem> _itemsToPool = new List<ObjectPoolItem>();
+    
     [SerializeField] private bool _activated;
     public bool Activated => _activated;
 
@@ -43,6 +45,16 @@ public class ObjectPool : MonoBehaviour
                 obj.gameObject.SetActive(false);
                 _pooledObjects.Add(obj);
             }
+        foreach (var poolItem in _itemsToPool)
+        {
+            _pooledObjects2[poolItem.ObjectToPool.GetType()] = new List<PoolableEntity>();
+            for (var i = 0; i < poolItem.AmountToPool; i++)
+            {
+                var obj = Instantiate(poolItem.ObjectToPool);
+                obj.gameObject.SetActive(false);
+                _pooledObjects2[poolItem.ObjectToPool.GetType()].Add(obj);
+            }
+        }
     }
 
     public T GetPooledObject<T>() where T : PoolableEntity => (T) GetPooledObject(typeof(T));
@@ -50,8 +62,8 @@ public class ObjectPool : MonoBehaviour
     public PoolableEntity GetPooledObject(Type T)
     {
         var poolItem = GetPoolItem(T);
-        var pooledObject = /*!poolItem.OnlyNew*/ Activated ? _pooledObjects.FirstOrDefault(o => !o.gameObject.activeInHierarchy && o.GetComponent(T) != null) : null;
-        if (pooledObject == null /*&& poolItem.ShouldExpand*/)
+        var pooledObject = Activated ? _pooledObjects.FirstOrDefault(o => !o.gameObject.activeInHierarchy && o.GetComponent(T) != null) : null;
+        if (pooledObject == null)
         {
             pooledObject = Instantiate(poolItem.ObjectToPool);
             _pooledObjects.Add(pooledObject);
@@ -78,6 +90,4 @@ public class ObjectPoolItem
 {
     [UsedImplicitly] public int AmountToPool;
     [UsedImplicitly] public PoolableEntity ObjectToPool;
-    //[SerializeField] public bool OnlyNew;
-    //[UsedImplicitly] public bool ShouldExpand;
 }

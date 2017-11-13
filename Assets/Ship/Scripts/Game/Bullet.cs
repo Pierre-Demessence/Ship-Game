@@ -17,9 +17,9 @@ public class Bullet : PoolableEntity
     {
     }
 
-    protected override void OnCollisionEnter2D(Collision2D col)
+    protected override void OnCollide(Collider2D col)
     {
-        base.OnCollisionEnter2D(col);
+        base.OnCollide(col);
         if ((col.gameObject.GetComponent<Enemy>()) != null)
             Die();
     }

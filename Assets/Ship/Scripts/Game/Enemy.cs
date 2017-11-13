@@ -32,9 +32,9 @@ public class Enemy : PoolableEntity
             }
     }
 
-    protected override void OnCollisionEnter2D(Collision2D col)
+    protected override void OnCollide(Collider2D col)
     {
-        base.OnCollisionEnter2D(col);
+        base.OnCollide(col);
         Bullet bullet;
         if ((bullet = col.gameObject.GetComponent<Bullet>()) != null)
             Health -= bullet.Power;

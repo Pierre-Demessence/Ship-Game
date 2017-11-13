@@ -41,7 +41,7 @@ public class Ship : Entity
         SceneManager.LoadScene("MainMenu");
     }
 
-    private new void OnCollisionEnter2D(Collision2D col)
+    protected override void OnCollide(Collider2D col)
     {
         Drop drop;
         if ((drop = col.gameObject.GetComponent<Drop>()) != null)

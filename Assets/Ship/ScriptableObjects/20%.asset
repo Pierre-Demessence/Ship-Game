@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dropItems:
   - Drop: {fileID: 114453485606770518, guid: 4b3e4512ee2de2243818b7ee92063d6a, type: 2}
-    DropChance: 20
+    DropChance: 100
