@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: da4a387804a3a584fb2863816f39f086
-timeCreated: 1509299544
+timeCreated: 1510101206
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -148,6 +148,8 @@ TextureImporter:
     21300282: ships_human_141
     21300284: ships_human_142
     21300286: ships_human_143
+    21300288: ships_human_144
+    21300290: ships_human_145
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -4517,6 +4519,34 @@ TextureImporter:
         - {x: 10.5, y: -16}
         - {x: 10.5, y: 10}
         - {x: 9.5, y: 15}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ships_human_144
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 724
+        width: 32
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ships_human_145
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 724
+        width: 32
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
       tessellationDetail: 0
     outline: []
     physicsShape: []
