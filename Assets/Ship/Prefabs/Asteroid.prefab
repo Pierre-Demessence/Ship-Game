@@ -108,7 +108,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dropTable: {fileID: 11400000, guid: 1c8b4ef5b0908cb41b6772d41769af29, type: 2}
   _health: 2
-  _power: 1
 --- !u!212 &212266115773873080
 SpriteRenderer:
   m_ObjectHideFlags: 1
