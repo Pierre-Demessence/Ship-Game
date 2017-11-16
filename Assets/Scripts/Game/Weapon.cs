@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class Weapon : MonoBehaviour
@@ -9,19 +7,13 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float _bulletSpacing = 1;
     private float _lastFire;
     private AudioSource _sound;
-    [SerializeField] private List<WeaponLevel> _weaponLevels = new List<WeaponLevel>();
-    private float Rof => CurrentWeaponLevel.Rof;
-    private int BulletAmount => CurrentWeaponLevel.BulletAmount;
-    private WeaponLevel CurrentWeaponLevel => _weaponLevels[Level - 1];
-    private int Level { get; set; } = 1;
-    private bool IsMaxLevel => Level == _weaponLevels.Count;
+    public float Rof { get; set; } = 1;
+    public int BulletAmount { get; set; } = 1;
 
     private void Awake()
     {
         _sound = GetComponent<AudioSource>();
     }
-
-    public void LevelUp() => Level = !IsMaxLevel ? Level + 1 : Level;
 
     public bool Fire()
     {
@@ -41,11 +33,4 @@ public class Weapon : MonoBehaviour
         _lastFire = Time.time;
         return true;
     }
-}
-
-[Serializable]
-public class WeaponLevel
-{
-    [SerializeField] public int BulletAmount;
-    [SerializeField] public float Rof;
 }

@@ -8,8 +8,7 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool Instance;
     
-    private readonly List<PoolableEntity> _pooledObjects = new List<PoolableEntity>();
-    private readonly Dictionary<Type, List<PoolableEntity>> _pooledObjects2 = new Dictionary<Type, List<PoolableEntity>>(); // TODO try this ?
+    private readonly Dictionary<Type, List<PoolableEntity>> _objectPool = new Dictionary<Type, List<PoolableEntity>>(); // TODO try this ?
     
     [SerializeField] private bool _activated = true;
     [SerializeField] private List<ObjectPoolItem> _itemsToPool = new List<ObjectPoolItem>();
@@ -40,22 +39,15 @@ public class ObjectPool : MonoBehaviour
     private void Start()
     {
         foreach (var poolItem in _itemsToPool)
-            for (var i = 0; i < poolItem.AmountToPool; i++)
-            {
-                var obj = Instantiate(poolItem.ObjectToPool);
-                obj.gameObject.SetActive(false);
-                _pooledObjects.Add(obj);
-            }
-        /*foreach (var poolItem in _itemsToPool)
         {
-            _pooledObjects2[poolItem.ObjectToPool.GetType()] = new List<PoolableEntity>();
+            _objectPool[poolItem.ObjectToPool.GetType()] = new List<PoolableEntity>();
             for (var i = 0; i < poolItem.AmountToPool; i++)
             {
                 var obj = Instantiate(poolItem.ObjectToPool);
                 obj.gameObject.SetActive(false);
-                _pooledObjects2[poolItem.ObjectToPool.GetType()].Add(obj);
+                _objectPool[poolItem.ObjectToPool.GetType()].Add(obj);
             }
-        }*/
+        }
     }
 
     public T GetPooledObject<T>() where T : PoolableEntity => (T) GetPooledObject(typeof(T));
@@ -63,11 +55,11 @@ public class ObjectPool : MonoBehaviour
     public PoolableEntity GetPooledObject(Type T)
     {
         var poolItem = GetPoolItem(T);
-        var pooledObject = Activated ? _pooledObjects.FirstOrDefault(o => !o.gameObject.activeInHierarchy && o.GetComponent(T) != null) : null;
+        var pooledObject = Activated ? _objectPool[T].FirstOrDefault(o => !o.gameObject.activeInHierarchy) : null;
         if (pooledObject == null)
         {
             pooledObject = Instantiate(poolItem.ObjectToPool);
-            _pooledObjects.Add(pooledObject);
+            _objectPool[T].Add(pooledObject);
         }
         if (pooledObject)
         {

@@ -34,8 +34,8 @@ public class Ship : Entity
 
     private void FixedUpdate()
     {
-        var movX = Input.GetAxis("Horizontal") * _speed;
-        var movY = Input.GetAxis("Vertical") * _speed;
+        var movX = Input.GetAxis("Horizontal") * Speed;
+        var movY = Input.GetAxis("Vertical") * Speed;
         Rigidbody2D.velocity = new Vector2(movX, movY);
 
         if (Input.GetButton("Fire"))
@@ -62,8 +62,7 @@ public class Ship : Entity
         Drop drop;
         if ((drop = col.gameObject.GetComponent<Drop>()) != null)
         {
-            Speed += 0.25f;
-            _weapon.LevelUp();
+            //Speed += 0.25f;
             drop.Consume();
         }
         if (col.gameObject.GetComponent<Enemy>() != null)
