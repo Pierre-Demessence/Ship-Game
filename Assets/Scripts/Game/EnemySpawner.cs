@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     [UsedImplicitly]
-    public float Difficulty => FindObjectOfType<Game>().Score / (float) _pointsPerDifficulty + 1f;
+    public float Difficulty => FindObjectOfType<Game>().Score / (float) _pointsPerDifficulty + 1f + Time.timeSinceLevelLoad / 250;
 
     private void Start()
     {
