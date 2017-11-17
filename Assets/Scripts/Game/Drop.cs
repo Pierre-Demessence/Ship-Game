@@ -7,8 +7,9 @@ public class Drop : PoolableEntity
         Rigidbody2D.velocity = new Vector2(0, -0.5f);
     }
 
-    public void Consume()
+    public void Consume(Ship ship)
     {
+        ship.UpgradePoints++;
         Die();
     }
 
