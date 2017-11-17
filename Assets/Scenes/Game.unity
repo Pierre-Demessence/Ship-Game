@@ -12365,7 +12365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8935ae3bbdfeb00498bc8142f005f2d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseCooldown: 1
+  _baseCooldown: 2
   _enabled: 1
   _enemyGroups:
   - {fileID: 11400000, guid: 4dc90628aea86e642b04315008c21370, type: 2}
