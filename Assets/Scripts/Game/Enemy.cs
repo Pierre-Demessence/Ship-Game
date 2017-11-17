@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = System.Random;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,6 +6,7 @@ public class Enemy : PoolableEntity
 {
     private readonly Random _random = new Random();
     [SerializeField] private DropTable _dropTable;
+    [SerializeField] private GameObject _explosion;
     [SerializeField] private float _health = 1f;
 
     private float Health
@@ -22,6 +22,7 @@ public class Enemy : PoolableEntity
 
     protected override void OnDie()
     {
+        if (_explosion) Instantiate(_explosion, transform.position, Quaternion.identity);
         FindObjectOfType<Game>().Score += 10;
         var rng = (float) _random.NextDouble();
         foreach (var dropItem in _dropTable.DropItems)

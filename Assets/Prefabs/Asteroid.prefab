@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dropTable: {fileID: 11400000, guid: 1c8b4ef5b0908cb41b6772d41769af29, type: 2}
+  _explosion: {fileID: 0}
   _health: 2
 --- !u!212 &212266115773873080
 SpriteRenderer:
