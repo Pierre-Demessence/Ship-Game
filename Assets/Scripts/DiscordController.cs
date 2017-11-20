@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class DiscordController : MonoBehaviour
 {
+#if !UNITY_WEBGL
     [SerializeField] private string _applicationId;
     private DiscordRpc.EventHandlers _handlers;
     [SerializeField] private string _optionalSteamId;
@@ -27,7 +28,9 @@ public class DiscordController : MonoBehaviour
                 field.SetValueDirect(__makeref(_presence), value);
             }
         }
+
         DiscordRpc.UpdatePresence(ref _presence);
+
     }
 
     private void ReadyCallback()
@@ -37,7 +40,9 @@ public class DiscordController : MonoBehaviour
         _presence.largeImageText = "BEST GAME EVER";
         _presence.smallImageKey = "kek";
         _presence.smallImageText = "KEKIMURUS";
+#if !UNITY_WEBGL
         DiscordRpc.UpdatePresence(ref _presence);
+#endif
         onConnect.Invoke();
     }
 
@@ -68,13 +73,15 @@ public class DiscordController : MonoBehaviour
 
     private void Update()
     {
+#if !UNITY_WEBGL
         DiscordRpc.RunCallbacks();
+#endif
     }
 
     private void OnEnable()
     {
         Debug.Log("Discord: init");
-
+#if !UNITY_WEBGL
         _handlers = new DiscordRpc.EventHandlers();
         _handlers.readyCallback = ReadyCallback;
         _handlers.disconnectedCallback += DisconnectedCallback;
@@ -83,11 +90,15 @@ public class DiscordController : MonoBehaviour
         _handlers.spectateCallback += SpectateCallback;
         _handlers.requestCallback += RequestCallback;
         DiscordRpc.Initialize(_applicationId, ref _handlers, true, _optionalSteamId);
+#endif
     }
 
     private void OnDisable()
     {
         Debug.Log("Discord: shutdown");
+#if !UNITY_WEBGL
         DiscordRpc.Shutdown();
+#endif
     }
+#endif
 }

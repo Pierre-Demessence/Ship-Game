@@ -7,6 +7,7 @@ public class MainMenu : Scene
     {
         Time.timeScale = 1;
         var findObjectOfType = FindObjectOfType<DiscordController>();
+#if !UNITY_WEBGL
         findObjectOfType?.onConnect.AddListener(() =>
         {
             findObjectOfType.UpdatePresence(new DiscordRpc.RichPresence
@@ -14,5 +15,6 @@ public class MainMenu : Scene
                 state = "Main Menu"
             });
         });
+#endif
     }
 }

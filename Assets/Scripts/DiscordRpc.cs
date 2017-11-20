@@ -1,7 +1,11 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+#if !UNITY_WEBGL
+using System.Runtime.InteropServices;
+#endif
 
 public class DiscordRpc
 {
+#if !UNITY_WEBGL
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ReadyCallback();
 
@@ -19,18 +23,21 @@ public class DiscordRpc
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void RequestCallback(JoinRequest request);
+#endif
 
     public struct EventHandlers
     {
+#if !UNITY_WEBGL
         public ReadyCallback readyCallback;
         public DisconnectedCallback disconnectedCallback;
         public ErrorCallback errorCallback;
         public JoinCallback joinCallback;
         public SpectateCallback spectateCallback;
         public RequestCallback requestCallback;
+#endif
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct RichPresence
     {
         public string state; /* max 128 bytes */
@@ -50,7 +57,7 @@ public class DiscordRpc
         public bool instance;
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct JoinRequest
     {
         public string userId;
@@ -65,6 +72,7 @@ public class DiscordRpc
         Ignore = 2
     }
 
+#if !UNITY_WEBGL
     [DllImport("discord-rpc", EntryPoint = "Discord_Initialize", CallingConvention = CallingConvention.Cdecl)]
     public static extern void Initialize(string applicationId, ref EventHandlers handlers, bool autoRegister, string optionalSteamId);
 
@@ -79,5 +87,5 @@ public class DiscordRpc
 
     [DllImport("discord-rpc", EntryPoint = "Discord_Respond", CallingConvention = CallingConvention.Cdecl)]
     public static extern void Respond(string userId, Reply reply);
+#endif
 }
-
